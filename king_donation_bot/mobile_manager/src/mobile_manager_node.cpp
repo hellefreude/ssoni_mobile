@@ -234,7 +234,7 @@ void wheel_move_function(double x, double y, double ratio_l, double ratio_r)
     wheel_direction_group(1,-1);
 
     motor_cmd_msg_1.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_1.motor_desired_direction;
-    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*y*motor_cmd_msg_2.motor_desired_direction;  
+    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_2.motor_desired_direction;  
   }
   else if(x < 0 && y < 0) // 4 사분면
   {
@@ -242,7 +242,7 @@ void wheel_move_function(double x, double y, double ratio_l, double ratio_r)
     wheel_direction_group(-1,1);
 
     motor_cmd_msg_1.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_1.motor_desired_direction;
-    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*y*motor_cmd_msg_2.motor_desired_direction;  
+    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_2.motor_desired_direction;  
   }
   else if(x > 0 && y > 0) // 2 사분면
   {
@@ -250,7 +250,7 @@ void wheel_move_function(double x, double y, double ratio_l, double ratio_r)
     wheel_direction_group(1,-1);
 
     motor_cmd_msg_1.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_1.motor_desired_direction;
-    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*y*motor_cmd_msg_2.motor_desired_direction;  
+    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_2.motor_desired_direction;  
   }
   else if(x > 0 && y < 0) // 3 사분면
   {
@@ -258,23 +258,23 @@ void wheel_move_function(double x, double y, double ratio_l, double ratio_r)
     wheel_direction_group(-1,1);
 
     motor_cmd_msg_1.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_1.motor_desired_direction;
-    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*y*motor_cmd_msg_2.motor_desired_direction;  
+    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_2.motor_desired_direction;  
   }
-  else if(x == 0 && y < 0) // 3 사분면
+  else if(x == 0 && y < 0) 
   {
     speed_ratio_rad = 0;
     wheel_direction_group(-1,1);
 
     motor_cmd_msg_1.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_1.motor_desired_direction;
-    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*y*motor_cmd_msg_2.motor_desired_direction;  
+    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_2.motor_desired_direction;  
   }
-  else if(x == 0 && y > 0) // 3 사분면
+  else if(x == 0 && y > 0) 
   {
     speed_ratio_rad = 0;
     wheel_direction_group(1,-1);
 
     motor_cmd_msg_1.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_1.motor_desired_direction;
-    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*y*motor_cmd_msg_2.motor_desired_direction;  
+    motor_cmd_msg_2.motor_desired_speed = (max_speed*fabs(sqrt(pow(x,2)+pow(y,2))))*motor_cmd_msg_2.motor_desired_direction;  
   }
   else // initial stop
   {
@@ -288,8 +288,8 @@ void wheel_move_function(double x, double y, double ratio_l, double ratio_r)
   printf("ratio_l : %f\n", ratio_l);
   printf("ratio_r : %f\n", ratio_r);
 
-  motor_cmd_msg_1.motor_desired_speed = motor_cmd_msg_1.motor_desired_speed * (ratio_l / 2);
-  motor_cmd_msg_2.motor_desired_speed = motor_cmd_msg_2.motor_desired_speed * (ratio_r / 2);
+  motor_cmd_msg_1.motor_desired_speed = fabs(motor_cmd_msg_1.motor_desired_speed * (ratio_l / 2));
+  motor_cmd_msg_2.motor_desired_speed = fabs(motor_cmd_msg_2.motor_desired_speed * (ratio_r / 2));
 
 /*
   if(fabs(x) < 0.5 && fabs(y) != 0)
@@ -335,14 +335,14 @@ void wheel_rotation(bool rotation_left, bool rotation_right)
     if(rotation_left == 1)
     {
       wheel_direction_group(1,1);
-      motor_cmd_msg_1.motor_desired_speed = max_speed*motor_cmd_msg_1.motor_desired_direction;
-      motor_cmd_msg_2.motor_desired_speed = max_speed*motor_cmd_msg_2.motor_desired_direction;
+      motor_cmd_msg_1.motor_desired_speed = fabs(max_speed*motor_cmd_msg_1.motor_desired_direction);
+      motor_cmd_msg_2.motor_desired_speed = fabs(max_speed*motor_cmd_msg_2.motor_desired_direction);
     }
     if(rotation_right == 1)
     {
       wheel_direction_group(-1,-1);
-      motor_cmd_msg_1.motor_desired_speed = max_speed*motor_cmd_msg_1.motor_desired_direction;
-      motor_cmd_msg_2.motor_desired_speed = max_speed*motor_cmd_msg_2.motor_desired_direction;
+      motor_cmd_msg_1.motor_desired_speed = fabs(max_speed*motor_cmd_msg_1.motor_desired_direction);
+      motor_cmd_msg_2.motor_desired_speed = fabs(max_speed*motor_cmd_msg_2.motor_desired_direction);
     }
   }
   else
